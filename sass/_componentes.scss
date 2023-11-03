@@ -1,0 +1,83 @@
+@mixin btn-base {
+    padding: 0.25rem 1.5rem; // Esto establece un relleno (padding) de 0.25 unidades en la parte superior e inferior y 1.5 unidades en el lado izquierdo y derecho del elemento al que se aplique el mixin. En este caso, se utiliza para proporcionar espacio alrededor del contenido del botón.
+    border-radius:1rem; // Esto establece un radio de las esquinas del elemento al que se aplique el mixin. Con un valor de 0.25rem, las esquinas del elemento se redondearán ligeramente, lo que crea una apariencia más suave en los bordes.
+}
+
+@mixin btn-sm-modify {
+    font-size: 1rem; // Cambia el tamaño de fuente a 1rem. Esto reduce el tamaño del texto en los botones en comparación con el valor predeterminado.
+    padding: 0.1rem 1rem; // Establece un relleno (padding) más pequeño en el botón en comparación con btn-base. El valor de relleno es de 0.1rem en la parte superior e inferior y 1rem en el lado izquierdo y derecho.
+}
+
+
+
+$color-text: #FFFFFF; // Define una variable llamada color-text y le asigna el valor #FFFFFF, que representa el color blanco. Esta variable se utilizará para definir el color de texto de los enlaces en el menú.
+$style-letra: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; // Define una variable llamada style-letra y le asigna una lista de fuentes en orden de preferencia. Esto se usará como la fuente de texto para los enlaces en el menú. Si la primera fuente no está disponible en el sistema del usuario, se buscará la siguiente en la lista.
+
+$color-main: #EEFB03; // Esta variable almacena un color amarillo (#EEFB03), que se utiliza como color principal en algunos botones.
+
+.main-menu {
+    margin-bottom: 0; // Establece el margen inferior del elemento .main-menu en 0 para eliminar cualquier espacio adicional en la parte inferior.
+    li {
+        display: inline; // Hace que los elementos de lista se muestren en línea, uno al lado del otro, en lugar de en una lista vertical.
+        list-style: none; // Elimina los marcadores de lista (puntos o números) de los elementos de lista.
+        font-size: 1.2rem; // Establece el tamaño de fuente de los elementos de lista en 1.2 rem.
+        margin-right: 2rem; // Agrega un margen derecho de 2 rem a los elementos de lista para separarlos.
+
+        a {
+            color: $color-text; // Establece el color de texto de los enlaces utilizando la variable $color-text, que es blanco (#FFFFFF).
+            text-decoration: none; // Elimina el subrayado de los enlaces.
+            text-transform: uppercase; // Cambia el texto de los enlaces a letras mayúsculas.
+            font-family: $style-letra; // Cambia el texto de los enlaces a letras mayúsculas.
+
+            &:hover {
+                color: #EEFB03; // Cambia el color del texto de los enlaces a amarillo (#EEFB03) cuando se pasa el cursor sobre ellos.
+                border-bottom: 3px solid #EEFB03; // Agrega una línea subrayada de 3 píxeles de grosor en color amarillo (#EEFB03) a los enlaces cuando se pasa el cursor sobre ellos.
+                border-radius: 3px; // Agrega un radio de 3 píxeles a las esquinas de la línea subrayada cuando se pasa el cursor sobre los enlaces.
+            }
+        }
+    }
+}
+
+// Establecen estilos específicos para botones principales (btn-main)
+.btn-main {
+    @include btn-base(); // Aquí se utiliza el mixin btn-base para aplicar un conjunto común de estilos a ambos tipos de botones. Esto incluye el relleno y el radio de las esquinas.
+    
+    //Luego, se establecen propiedades adicionales específicas para cada tipo de botón, como colores de fondo, colores de texto, bordes y fuentes de texto.
+    background-color: $color-main;
+    color: #000000;
+    border: solid 1px $color-main;
+    text-transform: uppercase;
+    font-family: $style-letra;
+
+    // En la regla &:hover, se definen los estilos que se aplicarán cuando el cursor se coloca sobre el botón, cambiando los colores y estilos.
+    &:hover {
+        background-color: #effb038e;
+        color: #000000a8;
+        border: solid 1px #effb036e;
+    }
+
+    // Estos selectores se utilizan para aplicar modificadores a los botones principales (btn-main-s) y secundarios (btn-sec-s). Los modificadores heredan los estilos de los botones principales o secundarios y luego aplican modificaciones adicionales.
+    &-s {
+        @extend .btn-main; // @extend .btn-main; o @extend .btn-sec; hereda los estilos base de los botones principales o secundarios.
+        @include btn-sm-modify(); // @include btn-sm-modify(); aplica el mixin btn-sm-modify para modificar el tamaño y el relleno de los botones.
+    }
+}
+
+// Establecen estilos específicos para botones secundarios (btn-sec).
+.btn-sec {
+    @include btn-base();
+    color: $color-text;
+    background-color: transparent;
+    border: none;
+    text-transform: uppercase;
+    font-family: $style-letra;
+
+    &:hover {
+        color: #888;
+    }
+
+    &-s {
+        @extend .btn-sec; // @extend .btn-main; o @extend .btn-sec; hereda los estilos base de los botones principales o secundarios.
+        @include btn-sm-modify();
+    }
+}
